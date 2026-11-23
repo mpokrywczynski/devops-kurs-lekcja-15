@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name panel.wewnetrzna.test;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name panel.wewnetrzna.test;
+    root /var/www/panel.wewnetrzna.test;
+    index index.html;
+
+    ssl_certificate     /etc/nginx/ssl/panel.wewnetrzna.test-fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/panel.wewnetrzna.test.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
